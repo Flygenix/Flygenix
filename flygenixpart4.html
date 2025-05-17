@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlyGenix - Power in Style</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* === LANDING PAGE === */
+    #landing {
+      height: 100vh;
+      background: linear-gradient(to right, #2e1a1d, #301a38); /* Low-brightness Instagram style */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .logo-mark {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5); /* Instagram colors */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 0 30px white;
+      border-radius: 12px; /* Square with rounded corners */
+    }
+
+    .logo-mark span {
+      font-size: 40px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    .logo {
+      font-size: 60px;
+      font-weight: bold;
+      background: linear-gradient(to right, white, #feda75);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .subtext {
+      color: #feda75;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px black;
+    }
+
+    .explore-btn {
+      padding: 15px 35px;
+      background-color: white;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+      transition: all 0.3s ease;
+    }
+
+    .explore-btn:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.05);
+    }
+
+    /* === DESIGN PAGE === */
+    #designPage {
+      display: none;
+      background: white;
+      color: black;
+      padding: 40px 20px 80px;
+      text-align: center;
+    }
+
+    #designPage h1 {
+      font-size: 36px;
+      color: #d62976; /* Instagram pink */
+      margin-bottom: 20px;
+    }
+
+    .input-box {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 2px solid #d62976;
+      width: 80%;
+      max-width: 300px;
+      margin-bottom: 10px;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background: #d62976;
+      color: white;
+      border: none;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #962fbf;
+    }
+
+    .tick-toggle {
+      font-size: 24px;
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 10px;
+      background: #d62976;
+      color: white;
+      transition: 0.3s ease;
+    }
+
+    .tick-toggle:hover {
+      background: #962fbf;
+    }
+
+    #output {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .name-style {
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: glow 1.5s infinite alternate;
+      padding: 10px 20px;
+      border-radius: 8px;
+      user-select: none;
+      background: #fff;
+      box-shadow: 0 0 10px #d62976;
+    }
+
+    .black-style {
+      animation: none !important;
+      color: black !important;
+      background: #eee;
+      box-shadow: none;
+    }
+
+    .copy-btn {
+      background: #222;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .copy-btn:hover {
+      background: #000;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #d62976; }
+      to { text-shadow: 0 0 20px #962fbf, 0 0 30px #fa7e1e; }
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 5px;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* === MODAL === */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      max-width: 600px;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #000;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 10px;
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .close-modal {
+      margin-top: 20px;
+      background: #d62976;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .close-modal:hover {
+      background: #962fbf;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LANDING PAGE -->
+  <div id="landing">
+    <div class="logo-mark">
+      <span>F</span>
+    </div>
+    <div class="logo">FlyGenix</div>
+    <div class="subtext">Power Your Name With Style</div>
+    <button class="explore-btn" onclick="goToDesignPage()">Explore Now</button>
+  </div>
+
+  <!-- DESIGN PAGE -->
+  <div id="designPage">
+    <h1>FlyGenix Name Designer</h1>
+    <input type="text" id="nameInput" class="input-box" placeholder="Enter your name" />
+    <div class="button-row">
+      <button class="submit-btn" onclick="generateStyles()">Show Designs</button>
+      <div class="tick-toggle" onclick="toggleBlack()">✓</div>
+    </div>
+    <div id="output"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a onclick="openModal('Home', 'Welcome to FlyGenix! A platform that empowers your name with style.')">Home</a>
+      <a onclick="openModal('Help', 'Need help? Just enter your name and click Show Designs! Use ✓ to change style.')">Help</a>
+      <a onclick="openModal('Contact', 'You can contact us at: support@flygenix.com')">Contact</a>
+      <a onclick="openModal('Terms & Conditions', 'Using FlyGenix means you accept our terms. No abuse or automated scraping allowed.')">Terms & Conditions</a>
+      <a onclick="openModal('Privacy Policy', 'We do not store or share your name inputs. Fly safe with FlyGenix.')">Privacy Policy</a>
+    </div>
+    <div>&copy; 2025 FlyGenix. All rights reserved.</div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+      <button class="close-modal" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    let isBlack = false;
+
+    function goToDesignPage() {
+      document.getElementById('landing').style.display = 'none';
+      document.getElementById('designPage').style.display = 'block';
+    }
+
+    function generateStyles() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name) return alert('Please enter your name');
+
+      const designs = [
+        `꧁༒☬ ${name} ☬༒꧂`,
+        `★彡 ${name} 彡★`,
+        `◥꧁${name}꧂◤`,
+        `✿ ${name} ✿`,
+        `◉‿◉ ${name} ◉‿◉`,
+        `♛ ${name} ♛`,
+        `•.• ${name} •.•`,
+        `★ ${name} ★`,
+        `➳ ${name} ➳`,
+        `𓆩 ${name} 𓆪`,
+        `⫷ ${name} ⫸`,
+        `༼ つ ${name} ༽つ`,
+        `『 ${name} 』`,
+        `≋ ${name} ≋`,
+        `ꜱʜᴀᴅᴏᴡ ${name} ᴢᴏɴᴇ`
+      ];
+
+      const output = document.getElementById('output');
+      output.innerHTML = "";
+
+      designs.forEach((text, i) => {
+        const container = document.createElement("div");
+        container.className = "name-style";
+        container.style.color = `hsl(${i * 24}, 100%, 50%)`;
+
+        const span = document.createElement("span");
+        span.textContent = text;
+
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "copy-btn";
+        copyBtn.textContent = "Copy";
+        copyBtn.onclick = () => {
+          navigator.clipboard.writeText(text);
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => copyBtn.textContent = "Copy", 1000);
+        };
+
+        container.appendChild(span);
+        container.appendChild(copyBtn);
+        output.appendChild(container);
+      });
+
+      isBlack = false;
+    }
+
+    function toggleBlack() {
+      const allStyles = document.querySelectorAll('.name-style');
+      if (allStyles.length === 0) return;
+
+      isBlack = !isBlack;
+
+      allStyles.forEach((div, i) => {
+        if (isBlack) {
+          div.classList.add('black-style');
+          div.style.color = 'black';
+        } else {
+          div.classList.remove('black-style');
+          div.style.color = `hsl(${i * 24}, 100%, 50%)`;
+        }
+      });
+    }
+
+    function openModal(title, text) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalText').innerText = text;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
